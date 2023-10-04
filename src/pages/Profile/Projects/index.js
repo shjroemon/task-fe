@@ -56,6 +56,8 @@ function Projects() {
     {
       title: "Name",
       dataIndex: "name",
+      render: (text, record) => (
+        <Link to={`/project/${record._id}`} style={{color: "black",textDecoration:"underline"}}>{text}</Link>),
     },
     {
       title: "Description",
