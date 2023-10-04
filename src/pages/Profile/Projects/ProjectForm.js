@@ -43,7 +43,7 @@ function ProjectForm({ show, setShow, reloadData, project }) {
   };
   return (
     <Modal
-      title={project ? "EDIT PROJRCT" : "CREATE PROJECT"}
+      title={project ? "EDIT PROJECT" : "CREATE PROJECT"}
       open={show}
       onCancel={() => setShow(false)}
       centered

@@ -24,10 +24,8 @@ function TaskForm({
   const onFinish = async (values) => {
     try {
       let response = null;
-      const assignedToMember = project.members.find(
-        (member) => member.user.email === email
-      );
-      const assignedToUserId = assignedToMember.user._id;
+     
+     
       dispatch(SetLoading(true));
       if (task) {
         // update task
@@ -38,6 +36,10 @@ function TaskForm({
           _id: task._id,
         });
       } else {
+        const assignedToMember = project.members.find(
+          (member) => member.user.email === email
+        );
+        const assignedToUserId = assignedToMember.user._id;
         const assignedBy = user._id;
         response = await CreateTask({
           ...values,
@@ -52,7 +54,6 @@ function TaskForm({
           // send notification to the assigned employee
           AddNotification({
             title: `You have been assigned a new task in ${project.name}`,
-            user: assignedToUserId,
             onClick: `/project/${project._id}`,
             description: values.description,
           });
