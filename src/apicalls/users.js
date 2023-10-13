@@ -7,4 +7,4 @@ export const LoginUser = async (payload) =>
   apiRequest("post", "/api/users/login", payload);
 
 export const GetLoggedInUser = async () =>
-  apiRequest("get", "/api/users/get-logged-in-user");
+  apiRequest("get", "/api/users/logged-in-user");

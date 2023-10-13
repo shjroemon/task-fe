@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://task-be.onrender.com"; // Base URL for the API
+const BASE_URL = "http://localhost:8000"; // Base URL for the API
 
 export const apiRequest = async (method, endpoint, payload) => {
   try {
