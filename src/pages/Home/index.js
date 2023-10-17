@@ -2,24 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetProjectsByRole } from "../../apicalls/projects";
 import { SetLoading } from "../../redux/loadersSlice";
-import { message } from "antd";
+import { message, Pagination } from "antd";
 import { getDateFormat } from "../../utils/helpers";
 import Divider from "../../components/Divider";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [projects, setProjects] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProjects, setTotalProjects] = useState(0);
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const pageSize = 10; // Number of projects per page
+
   const getData = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await GetProjectsByRole();
+      const response = await GetProjectsByRole(currentPage, pageSize);
       dispatch(SetLoading(false));
       if (response.success) {
         setProjects(response.data);
+        setTotalProjects(response.totalProjects);
       } else {
         throw new Error(response.message);
       }
@@ -29,9 +34,14 @@ function Home() {
     }
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   useEffect(() => {
     getData();
-  }, []);
+  }, [currentPage]);
+
   return (
     <div>
       <h1 className="text-primary text-xl">
@@ -41,6 +51,7 @@ function Home() {
       <div className="grid grid-cols-4 gap-5 mt-5">
         {projects.map((project) => (
           <div
+            key={project._id}
             className="flex flex-col gap-1 border border-solid border-gray-400 rounded-md p-2 cursor-pointer"
             onClick={() => navigate(`/project/${project._id}`)}
           >
@@ -76,11 +87,19 @@ function Home() {
         ))}
       </div>
 
+      {totalProjects > pageSize && (
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={totalProjects}
+          onChange={handlePageChange}
+          className="mt-5"
+        />
+      )}
+
       {projects.length === 0 && (
         <div className="flex">
-          <h1 className="text-primary text-xl">
-               You have no projects yet
-          </h1>
+          <h1 className="text-primary text-xl">You have no projects yet</h1>
         </div>
       )}
     </div>

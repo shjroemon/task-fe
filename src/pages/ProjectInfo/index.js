@@ -9,9 +9,9 @@ import { SetLoading } from "../../redux/loadersSlice";
 import { getDateFormat } from "../../utils/helpers";
 import Members from "./Members";
 import Tasks from "./Tasks";
+import { getTimelineFormat } from "../../utils/helpers";
 
 function ProjectInfo() {
- 
   const [currentUserRole, setCurrentUserRole] = useState("");
   const { user } = useSelector((state) => state.users);
   const [project, setProject] = useState(null);
@@ -37,11 +37,8 @@ function ProjectInfo() {
     }
   };
 
-
-
   useEffect(() => {
     getData();
-   
   }, []);
 
   return (
@@ -77,6 +74,14 @@ function ProjectInfo() {
               </span>
               <span className="text-gray-600 text-sm">
                 {project.owner.firstName} {project.owner.lastName}
+              </span>
+            </div>
+            <div className="flex gap-5">
+              <span className="text-gray-600 text-sm font-semibold">
+                Timeline
+              </span>
+              <span className="text-gray-600 text-sm">
+                {getTimelineFormat(project.timeline)}
               </span>
             </div>
           </div>

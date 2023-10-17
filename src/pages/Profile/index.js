@@ -8,7 +8,6 @@ function Profile() {
       <Tabs.TabPane tab="Projects" key="1">
         <Projects />
       </Tabs.TabPane>
-      
     </Tabs>
   );
 }

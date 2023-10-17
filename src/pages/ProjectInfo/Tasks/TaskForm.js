@@ -24,8 +24,7 @@ function TaskForm({
   const onFinish = async (values) => {
     try {
       let response = null;
-     
-     
+
       dispatch(SetLoading(true));
       if (task) {
         // update task
